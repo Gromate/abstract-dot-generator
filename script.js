@@ -22,12 +22,36 @@ function getRandomColor() {
     )`
 }
 
+
+function smoothing(number) {
+    if (number < 0.2) {
+        return number*2;
+    } 
+    else if (number > 0.8) {
+        return number*2-1;
+    }
+    else {
+        return number/2+0.25;
+    }
+}
+function getRandomIntMaxSmoothing(max) {
+    return Math.floor(smoothing(Math.random())*max);
+}
+
 CanvasRenderingContext2D.prototype.circle = function(x, y, radius) {
     this.beginPath();
     this.arc(x, y, radius, 0, Math.PI*2, true);
     this.fill();
 }
 
+function getRandomColorPalette(colorPalette) {
+    return `#${colorPalette[Math.floor(Math.random()*colorPalette.length)]}`;
+}
+
+
+const colorPalette = ["E966A0", "2B2730","6554AF", "9575DE"];
+const color2 = ["164B60", "1B6B93","4FC0D0", "A2FF86"];
+const color3 = ["F6F1E9", "FFD93D","FF8400", "4F200D"];
 function draw() {
     const canvas = document.getElementById("canvas");
     canvas.width = (window.innerWidth > 0) ? window.innerWidth : screen.width;
@@ -38,9 +62,9 @@ function draw() {
         const ctx = canvas.getContext("2d");
 
         for (let i=0; i < getRandomInt(10, 50); i++) {
-            ctx.fillStyle = getRandomColor();
-            const x = getRandomIntMax(ctx.canvas.width);
-            const y = getRandomIntMax(ctx.canvas.height);
+            ctx.fillStyle = getRandomColorPalette(color2);
+            const x = getRandomIntMaxSmoothing(ctx.canvas.width);
+            const y = getRandomIntMaxSmoothing(ctx.canvas.height);
             const radius = getRandomIntMax(100);
             ctx.circle(x, y, radius);
 
