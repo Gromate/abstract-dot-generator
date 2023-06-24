@@ -1,3 +1,26 @@
+:root {
+    --background-color: #312F2F;
+    --main-color: #84DCCF;
+    --accent-color: #F991CC;
+    --text-color: #fff8f4;
+}
+
+body {
+    background-color: var(--background-color);
+    color: var(--text-color);
+}
+
+canvas {
+    background-color: white;
+}
+
 .border {
     border: 1px solid black;
+}
+
+button {
+    border: 1px solid blue;
+    border-radius: 10px;
+    background-color: ;
+    padding: 4px;
 }
