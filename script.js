@@ -50,3 +50,7 @@ function draw() {
 
 }
 draw();
+
+function buttonRender() {
+    draw();
+}
