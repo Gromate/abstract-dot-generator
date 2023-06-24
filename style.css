@@ -1,8 +1,9 @@
 :root {
-    --background-color: #312F2F;
-    --main-color: #84DCCF;
-    --accent-color: #F991CC;
-    --text-color: #fff8f4;
+    --background-color: #2B2730;
+    --main-color: #6554AF;
+    --secondary-color: #9575DE;
+    --accent-color: #E966A0;
+    --text-color: #fff8f4;  
 }
 
 body {
@@ -19,8 +20,8 @@ canvas {
 }
 
 button {
-    border: 1px solid blue;
+    border: 0px     var(--main-color);
     border-radius: 10px;
-    background-color: ;
-    padding: 4px;
+    background-color: var(--secondary-color);
+    padding: 8px;
 }
