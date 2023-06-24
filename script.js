@@ -1,3 +1,5 @@
+import Dot from "./dot";
+
 //get random Int smaller than max
 function getRandomIntMax(max) {
     return Math.floor(Math.random()*max);
@@ -52,6 +54,8 @@ function getRandomColorPalette(colorPalette) {
 const colorPalette = ["E966A0", "2B2730","6554AF", "9575DE"];
 const color2 = ["164B60", "1B6B93","4FC0D0", "A2FF86"];
 const color3 = ["F6F1E9", "FFD93D","FF8400", "4F200D"];
+var dotCount = 50;
+const dotArray = [];
 function draw() {
     const canvas = document.getElementById("canvas");
     canvas.width = (window.innerWidth > 0) ? window.innerWidth : screen.width;
@@ -61,8 +65,8 @@ function draw() {
     if (canvas.getContext) {
         const ctx = canvas.getContext("2d");
 
-        for (let i=0; i < getRandomInt(10, 50); i++) {
-            ctx.fillStyle = getRandomColorPalette(color2);
+        for (let i=0; i < dotCount; i++) {
+            ctx.fillStyle = getRandomColorPalette(colorPalette);
             const x = getRandomIntMaxSmoothing(ctx.canvas.width);
             const y = getRandomIntMaxSmoothing(ctx.canvas.height);
             const radius = getRandomIntMax(100);
@@ -78,3 +82,13 @@ draw();
 function buttonRender() {
     draw();
 }
+
+var slider = document.getElementById("dotCount");
+var output = document.getElementById("outputDotCount");
+output.innerHTML = slider.value;
+
+slider.oninput = function() {
+    output.innerHTML = this.value;
+    dotCount = this.value;
+    draw();
+} 
