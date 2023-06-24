@@ -1,21 +1,24 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
     <title>Abstract dot generator</title>
 </head>
+
 <body>
     <div>
         <canvas class="border" id="canvas"></canvas>
     </div>
-    <button class="" onclick="buttonRender()">Reload Image</button>
+    <button class="" onclick="">Reload Image</button>
     <div class="slidecontainer">
         Dot count
-        <input type="range" min="1" max="100" value="50" class="slider" id="dotCount">
+        <input type="range" min="1" max="500" value="50" class="slider" id="dotCount">
         <div id="outputDotCount"></div>
     </div>
-    <script src="script.js"></script>
+    <script type="module" src="script.js"></script>
 </body>
+
 </html>
