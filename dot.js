@@ -12,4 +12,4 @@ class Dot {
     }
 }
 
-export default Dot;
+export { Dot };

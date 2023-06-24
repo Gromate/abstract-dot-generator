@@ -1,4 +1,4 @@
-import Dot from "./dot";
+import { Dot } from "./dot.js";
 
 //get random Int smaller than max
 function getRandomIntMax(max) {
@@ -55,7 +55,7 @@ const colorPalette = ["E966A0", "2B2730","6554AF", "9575DE"];
 const color2 = ["164B60", "1B6B93","4FC0D0", "A2FF86"];
 const color3 = ["F6F1E9", "FFD93D","FF8400", "4F200D"];
 var dotCount = 50;
-const dotArray = [];
+const dots = [];
 function draw() {
     const canvas = document.getElementById("canvas");
     canvas.width = (window.innerWidth > 0) ? window.innerWidth : screen.width;
@@ -64,14 +64,23 @@ function draw() {
     canvas.height *= 0.9
     if (canvas.getContext) {
         const ctx = canvas.getContext("2d");
+        while(dots.length <= dotCount) {
+            dots.push(new Dot(
+                getRandomIntMax(ctx.canvas.width),
+                getRandomIntMax(ctx.canvas.height),
+                getRandomIntMax(100),
+                getRandomColorPalette(colorPalette)
+            ));
+        }
 
-        for (let i=0; i < dotCount; i++) {
-            ctx.fillStyle = getRandomColorPalette(colorPalette);
-            const x = getRandomIntMaxSmoothing(ctx.canvas.width);
-            const y = getRandomIntMaxSmoothing(ctx.canvas.height);
-            const radius = getRandomIntMax(100);
-            ctx.circle(x, y, radius);
+        while(dots.length > dotCount) {
+            dots.pop();
+        }
 
+        for (var dot of dots) {
+            console.log(dot.toString())
+            ctx.fillStyle = dot.color;
+            ctx.circle(dot.x, dot.y, dot.radius);
         }
 
     }
