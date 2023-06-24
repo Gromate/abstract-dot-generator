@@ -3,7 +3,7 @@
     --main-color: #6554AF;
     --secondary-color: #9575DE;
     --accent-color: #E966A0;
-    --text-color: #fff8f4;  
+    --text-color: #fff8f4;
 }
 
 body {
@@ -20,7 +20,7 @@ canvas {
 }
 
 button {
-    border: 0px     var(--main-color);
+    border: 0px var(--main-color);
     border-radius: 10px;
     background-color: var(--secondary-color);
     padding: 8px;
