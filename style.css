@@ -1,12 +1,14 @@
 :root {
     --background-color: #2B2730;
-    --main-color: #6554AF;
+    --main-color: #6554af;
+    --main-color-darker: #342b5a;
     --secondary-color: #9575DE;
     --accent-color: #E966A0;
     --text-color: #fff8f4;
 }
 
 body {
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
     background-color: var(--background-color);
     color: var(--text-color);
 }
@@ -20,8 +22,13 @@ canvas {
 }
 
 button {
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
     border: 0px var(--main-color);
     border-radius: 10px;
     background-color: var(--secondary-color);
     padding: 8px;
+}
+
+button:hover {
+    background-color: var(--main-color-darker);
 }
