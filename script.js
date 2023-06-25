@@ -28,14 +28,11 @@ function getRandomColorPalette(colorPalette) {
     return `#${colorPalette[Math.floor(Math.random() * colorPalette.length)]}`;
 }
 
-
-const colorPalette = ["E966A0", "2B2730", "6554AF", "9575DE"];
-const color2 = ["164B60", "1B6B93", "4FC0D0", "A2FF86"];
-const color3 = ["F6F1E9", "FFD93D", "FF8400", "4F200D"];
 var dotScale = 50;
 var dotCount = 50;
 const dots = [];
 const canvas = document.getElementById("canvas");
+const colorPalette = Palettes.JAMAICA;
 
 function draw() {
     canvas.width = (window.innerWidth > 0) ? window.innerWidth : screen.width;
@@ -88,8 +85,8 @@ function daAlgo() {
     }
 
     var urgeToDraw = 0;
-    const maxUrge = 20;
-    const maxStepSize = 20;
+    const maxUrge = 10;
+    const maxStepSize = 50;
     const xBias = -1;
     const yBias = -1;
 
