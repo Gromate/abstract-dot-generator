@@ -9,14 +9,19 @@
 </head>
 
 <body>
-    <div>
+    <div class="center">
         <canvas class="border" id="canvas"></canvas>
     </div>
     <button id="buttonReload">Reload Image</button>
     <div class="slidecontainer">
-        Dot count
+        <label for="dotCount">Dot count</label>
         <input type="range" min="1" max="500" value="50" class="slider" id="dotCount">
         <div id="outputDotCount"></div>
+    </div>
+    <div class="slidecontainer">
+        <label for="dotRadius">Dot scale</label>
+        <input type="range" min="1" max="250" value="50" class="slider" id="dotScale">
+        <div id="outputDotScale"></div>
     </div>
     <script type="module" src="script.js"></script>
 </body>

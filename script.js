@@ -1,8 +1,12 @@
 import { Dot } from "./dot.js";
 
-var slider = document.getElementById("dotCount");
-var output = document.getElementById("outputDotCount");
-output.innerHTML = slider.value;
+var sliderDotCount = document.getElementById("dotCount");
+var outputDotCount = document.getElementById("outputDotCount");
+outputDotCount.innerHTML = sliderDotCount.value;
+
+var sliderDotScale = document.getElementById("dotScale");
+var outputDotScale = document.getElementById("outputDotScale");
+outputDotScale.innerHTML = sliderDotScale.value;
 
 //get random Int smaller than max
 function getRandomIntMax(max) {
@@ -58,22 +62,25 @@ function getRandomColorPalette(colorPalette) {
 const colorPalette = ["E966A0", "2B2730","6554AF", "9575DE"];
 const color2 = ["164B60", "1B6B93","4FC0D0", "A2FF86"];
 const color3 = ["F6F1E9", "FFD93D","FF8400", "4F200D"];
+var dotScale = 50;
 var dotCount = 50;
 const dots = [];
 function draw() {
     const canvas = document.getElementById("canvas");
     canvas.width = (window.innerWidth > 0) ? window.innerWidth : screen.width;
-    canvas.width *= 0.9;
+    canvas.width -= 16;
     canvas.height = (window.innerHeight > 0) ? window.innerHeight : screen.height;
-    canvas.height *= 0.9
+    canvas.height *= 0.9;
     if (canvas.getContext) {
         const ctx = canvas.getContext("2d");
-        dotCount = slider.value;
+        dotCount = sliderDotCount.value;
+        dotScale = sliderDotScale.value;
+
         while(dots.length <= dotCount) {
             dots.push(new Dot(
                 getRandomIntMax(ctx.canvas.width), //x
                 getRandomIntMax(ctx.canvas.height), //y
-                getRandomIntMax(100), //radius
+                Math.random(), //radius
                 getRandomColorPalette(colorPalette) //color
             ));
         }
@@ -84,7 +91,7 @@ function draw() {
 
         for (var dot of dots) {
             ctx.fillStyle = dot.color;
-            ctx.circle(dot.x, dot.y, dot.radius);
+            ctx.circle(dot.x, dot.y, dot.radius*dotScale);
         }
 
     }
@@ -99,9 +106,14 @@ function reroll() {
     draw();
 }
 
-slider.oninput = function() {
-    output.innerHTML = this.value;
-    //dotCount = this.value;
+//sliders functions
+sliderDotCount.oninput = function() {
+    outputDotCount.innerHTML = this.value;
+    draw();
+} 
+
+sliderDotScale.oninput = function() {
+    outputDotScale.innerHTML = this.value;
     draw();
 } 
 
