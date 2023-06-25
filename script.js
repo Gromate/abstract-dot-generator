@@ -34,8 +34,9 @@ const color3 = ["F6F1E9", "FFD93D", "FF8400", "4F200D"];
 var dotScale = 50;
 var dotCount = 50;
 const dots = [];
+const canvas = document.getElementById("canvas");
+
 function draw() {
-    const canvas = document.getElementById("canvas");
     canvas.width = (window.innerWidth > 0) ? window.innerWidth : screen.width;
     canvas.width -= 16;
     canvas.height = (window.innerHeight > 0) ? window.innerHeight : screen.height;
@@ -45,7 +46,11 @@ function draw() {
         dotCount = sliderDotCount.value;
         dotScale = sliderDotScale.value;
 
-        while (dots.length <= dotCount) {
+        //Drawing white background
+        ctx.fillStyle = `white`;
+        ctx.fillRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+
+        while (dots.length < dotCount) {
             dots.push(new Dot(
                 fonkyMath.getRandomIntMax(ctx.canvas.width), //x
                 fonkyMath.getRandomIntMax(ctx.canvas.height), //y
@@ -100,3 +105,10 @@ document.getElementById("buttonRerollColors").addEventListener('click', () => {
     rerollColors();
     draw();
 });
+
+function dlCanvas() {
+    const dt = canvas.toDataURL('image/jpg');
+    this.href = dt;
+}
+
+document.getElementById("dl").addEventListener('click', dlCanvas, false);
