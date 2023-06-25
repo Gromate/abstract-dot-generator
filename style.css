@@ -7,6 +7,12 @@
     --text-color: #fff8f4;
 }
 
+.center {
+    display: flex;
+    margin: auto;
+    width: 100%;
+}
+
 body {
     font-family: Verdana, Geneva, Tahoma, sans-serif;
     background-color: var(--background-color);
@@ -14,11 +20,15 @@ body {
 }
 
 canvas {
+    margin-bottom: 16px;
+    display: block;
+    margin-right: auto;
+    margin-left: auto;
     background-color: white;
 }
 
 .border {
-    border: 1px solid black;
+    border: 2px solid var(--main-color-darker);
 }
 
 button {
