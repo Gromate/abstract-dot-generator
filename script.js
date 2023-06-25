@@ -1,5 +1,9 @@
 import { Dot } from "./dot.js";
 
+var slider = document.getElementById("dotCount");
+var output = document.getElementById("outputDotCount");
+output.innerHTML = slider.value;
+
 //get random Int smaller than max
 function getRandomIntMax(max) {
     return Math.floor(Math.random()*max);
@@ -64,12 +68,13 @@ function draw() {
     canvas.height *= 0.9
     if (canvas.getContext) {
         const ctx = canvas.getContext("2d");
+        dotCount = slider.value;
         while(dots.length <= dotCount) {
             dots.push(new Dot(
-                getRandomIntMax(ctx.canvas.width),
-                getRandomIntMax(ctx.canvas.height),
-                getRandomIntMax(100),
-                getRandomColorPalette(colorPalette)
+                getRandomIntMax(ctx.canvas.width), //x
+                getRandomIntMax(ctx.canvas.height), //y
+                getRandomIntMax(100), //radius
+                getRandomColorPalette(colorPalette) //color
             ));
         }
 
@@ -78,7 +83,6 @@ function draw() {
         }
 
         for (var dot of dots) {
-            console.log(dot.toString())
             ctx.fillStyle = dot.color;
             ctx.circle(dot.x, dot.y, dot.radius);
         }
@@ -88,16 +92,19 @@ function draw() {
 }
 draw();
 
-function buttonRender() {
+function reroll() {
+    while (dots.length > 0) {
+        dots.pop();
+    }
     draw();
 }
 
-var slider = document.getElementById("dotCount");
-var output = document.getElementById("outputDotCount");
-output.innerHTML = slider.value;
-
 slider.oninput = function() {
     output.innerHTML = this.value;
-    dotCount = this.value;
+    //dotCount = this.value;
     draw();
 } 
+
+document.getElementById("buttonReload").addEventListener('click', () => {
+    reroll();
+});
