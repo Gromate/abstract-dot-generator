@@ -10,7 +10,7 @@ outputDotScale.innerHTML = sliderDotScale.value;
 
 //get random Int smaller than max
 function getRandomIntMax(max) {
-    return Math.floor(Math.random()*max);
+    return Math.floor(Math.random() * max);
 }
 
 //get random Int between min and max
@@ -21,7 +21,7 @@ function getRandomInt(min, max) {
 }
 
 function getRandomArbitraryMax(max) {
-    return Math.random()*max;
+    return Math.random() * max;
 }
 
 function getRandomColor() {
@@ -35,33 +35,34 @@ function getRandomColor() {
 
 function smoothing(number) {
     if (number < 0.2) {
-        return number*2;
-    } 
+        return number * 2;
+    }
     else if (number > 0.8) {
-        return number*2-1;
+        return number * 2 - 1;
     }
     else {
-        return number/2+0.25;
+        return number / 2 + 0.25;
     }
 }
+
 function getRandomIntMaxSmoothing(max) {
-    return Math.floor(smoothing(Math.random())*max);
+    return Math.floor(smoothing(Math.random()) * max);
 }
 
-CanvasRenderingContext2D.prototype.circle = function(x, y, radius) {
+CanvasRenderingContext2D.prototype.circle = function (x, y, radius) {
     this.beginPath();
-    this.arc(x, y, radius, 0, Math.PI*2, true);
+    this.arc(x, y, radius, 0, Math.PI * 2, true);
     this.fill();
 }
 
 function getRandomColorPalette(colorPalette) {
-    return `#${colorPalette[Math.floor(Math.random()*colorPalette.length)]}`;
+    return `#${colorPalette[Math.floor(Math.random() * colorPalette.length)]}`;
 }
 
 
-const colorPalette = ["E966A0", "2B2730","6554AF", "9575DE"];
-const color2 = ["164B60", "1B6B93","4FC0D0", "A2FF86"];
-const color3 = ["F6F1E9", "FFD93D","FF8400", "4F200D"];
+const colorPalette = ["E966A0", "2B2730", "6554AF", "9575DE"];
+const color2 = ["164B60", "1B6B93", "4FC0D0", "A2FF86"];
+const color3 = ["F6F1E9", "FFD93D", "FF8400", "4F200D"];
 var dotScale = 50;
 var dotCount = 50;
 const dots = [];
@@ -76,7 +77,7 @@ function draw() {
         dotCount = sliderDotCount.value;
         dotScale = sliderDotScale.value;
 
-        while(dots.length <= dotCount) {
+        while (dots.length <= dotCount) {
             dots.push(new Dot(
                 getRandomIntMax(ctx.canvas.width), //x
                 getRandomIntMax(ctx.canvas.height), //y
@@ -85,13 +86,13 @@ function draw() {
             ));
         }
 
-        while(dots.length > dotCount) {
+        while (dots.length > dotCount) {
             dots.pop();
         }
 
         for (var dot of dots) {
             ctx.fillStyle = dot.color;
-            ctx.circle(dot.x, dot.y, dot.radius*dotScale);
+            ctx.circle(dot.x, dot.y, dot.radius * dotScale);
         }
 
     }
@@ -103,20 +104,31 @@ function reroll() {
     while (dots.length > 0) {
         dots.pop();
     }
-    draw();
+}
+
+function rerollColors() {
+    for (var dot of dots) {
+        dot.color = getRandomColorPalette(colorPalette);
+    }
 }
 
 //sliders functions
-sliderDotCount.oninput = function() {
+sliderDotCount.oninput = function () {
     outputDotCount.innerHTML = this.value;
     draw();
-} 
+}
 
-sliderDotScale.oninput = function() {
+sliderDotScale.oninput = function () {
     outputDotScale.innerHTML = this.value;
     draw();
-} 
+}
 
 document.getElementById("buttonReload").addEventListener('click', () => {
     reroll();
+    draw();
+});
+
+document.getElementById("buttonRerollColors").addEventListener('click', () => {
+    rerollColors();
+    draw();
 });
