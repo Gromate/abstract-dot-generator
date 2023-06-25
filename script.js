@@ -1,5 +1,6 @@
 import { Dot } from "./dot.js";
 import * as fonkyMath from "./fonkyMath.js";
+import { Palettes } from "./colorPalettes.js";
 
 var sliderDotCount = document.getElementById("dotCount");
 var outputDotCount = document.getElementById("outputDotCount");
@@ -51,9 +52,10 @@ function draw() {
         ctx.fillRect(0, 0, ctx.canvas.width, ctx.canvas.height);
 
         while (dots.length < dotCount) {
+            const coordinates = daAlgo();
             dots.push(new Dot(
-                fonkyMath.getRandomIntMax(ctx.canvas.width), //x
-                fonkyMath.getRandomIntMax(ctx.canvas.height), //y
+                coordinates[0],
+                coordinates[1],
                 Math.random(), //radius
                 getRandomColorPalette(colorPalette) //color
             ));
@@ -72,6 +74,46 @@ function draw() {
 
 }
 draw();
+
+function daAlgo() {
+    var x, y;
+    if (!Array.isArray(dots) || !dots.length) {
+        //x = canvas.width/2;
+        //y = canvas.height/2;
+        x = fonkyMath.getRandomIntMax(canvas.width);
+        y = fonkyMath.getRandomIntMax(canvas.height);
+    } else {
+        x = dots[dots.length-1].x;
+        y = dots[dots.length-1].y;
+    }
+
+    var urgeToDraw = 0;
+    const maxUrge = 20;
+    const maxStepSize = 20;
+    const xBias = -1;
+    const yBias = -1;
+
+    while (urgeToDraw < maxUrge) {
+        x += fonkyMath.getRandomIntInclusive(-maxStepSize, maxStepSize)+xBias;
+        y += fonkyMath.getRandomIntInclusive(-maxStepSize, maxStepSize)+yBias;
+        urgeToDraw += fonkyMath.getRandomIntMax(maxStepSize);
+    }
+
+    if (x > canvas.width) {
+        x -= canvas.width;
+    }
+    else if (x < 0) {
+        x += canvas.width;
+    }   
+    if (y > canvas.height) {
+        y -= canvas.height;
+    }
+    else if (y < 0) {
+        y += canvas.height;
+    }
+
+    return [x,y];
+}
 
 function reroll() {
     while (dots.length > 0) {
