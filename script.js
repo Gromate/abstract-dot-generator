@@ -10,6 +10,18 @@ var sliderDotScale = document.getElementById("dotScale");
 var outputDotScale = document.getElementById("outputDotScale");
 outputDotScale.innerHTML = sliderDotScale.value;
 
+var sliderMaxUrge = document.getElementById("maxUrge");
+var outputMaxUrge = document.getElementById("outputMaxUrge");
+outputMaxUrge.innerHTML = sliderMaxUrge.value;
+
+var sliderXBias = document.getElementById("xBias");
+var outputXBias = document.getElementById("outputXBias");
+outputXBias.innerHTML = sliderXBias.value;
+
+var sliderYBias = document.getElementById("yBias");
+var outputYBias = document.getElementById("outputYBias");
+outputYBias.innerHTML = sliderYBias.value;
+
 function getRandomColor() {
     return `rgb(
         ${fonkyMath.getRandomArbitraryMax(255)},
@@ -32,7 +44,12 @@ var dotScale = 50;
 var dotCount = 50;
 const dots = [];
 const canvas = document.getElementById("canvas");
-const colorPalette = Palettes.JAMAICA;
+
+var maxUrge = 10;
+var xBias = -1.0;
+var yBias = -1.0;
+
+const colorPalette = Palettes.DEFAULT;
 
 function draw() {
     canvas.width = (window.innerWidth > 0) ? window.innerWidth : screen.width;
@@ -43,6 +60,10 @@ function draw() {
         const ctx = canvas.getContext("2d");
         dotCount = sliderDotCount.value;
         dotScale = sliderDotScale.value;
+
+        maxUrge = sliderMaxUrge.value;
+        xBias = parseFloat(sliderXBias.value);
+        yBias = parseFloat(sliderYBias.value);
 
         //Drawing white background
         ctx.fillStyle = `white`;
@@ -56,10 +77,12 @@ function draw() {
                 Math.random(), //radius
                 getRandomColorPalette(colorPalette) //color
             ));
+            console.log("creating");
         }
 
         while (dots.length > dotCount) {
             dots.pop();
+            console.log("deleting");
         }
 
         for (var dot of dots) {
@@ -74,6 +97,9 @@ draw();
 
 function daAlgo() {
     var x, y;
+    var urgeToDraw = 0;
+    const StepSize = 10;
+
     if (!Array.isArray(dots) || !dots.length) {
         //x = canvas.width/2;
         //y = canvas.height/2;
@@ -84,17 +110,11 @@ function daAlgo() {
         y = dots[dots.length-1].y;
     }
 
-    var urgeToDraw = 0;
-    const maxUrge = 10;
-    const maxStepSize = 50;
-    const xBias = -1;
-    const yBias = -1;
-
     while (urgeToDraw < maxUrge) {
-        x += fonkyMath.getRandomIntInclusive(-maxStepSize, maxStepSize)+xBias;
-        y += fonkyMath.getRandomIntInclusive(-maxStepSize, maxStepSize)+yBias;
-        urgeToDraw += fonkyMath.getRandomIntMax(maxStepSize);
-    }
+        x += fonkyMath.getRandomIntInclusive(-StepSize, StepSize)+xBias;
+        y += fonkyMath.getRandomIntInclusive(-StepSize, StepSize)+yBias;
+        urgeToDraw += fonkyMath.getRandomIntMax(StepSize);
+    }   
 
     if (x > canvas.width) {
         x -= canvas.width;
@@ -132,6 +152,24 @@ sliderDotCount.oninput = function () {
 
 sliderDotScale.oninput = function () {
     outputDotScale.innerHTML = this.value;
+    draw();
+}
+
+sliderMaxUrge.oninput = function () {
+    outputMaxUrge.innerHTML = this.value;
+    reroll();
+    draw();
+}
+
+sliderXBias.oninput = function () {
+    outputXBias.innerHTML = this.value;
+    reroll();
+    draw();
+}
+
+sliderYBias.oninput = function () {
+    outputYBias.innerHTML = this.value;
+    reroll();
     draw();
 }
 
