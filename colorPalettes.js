@@ -6,4 +6,5 @@ export const Palettes = Object.freeze({
     FREEZING_NIGHT: ["9ac5d3","141e26","cbd8df","159ab7","1e5067"],
     PINECONE: ["274001","f29f05","f25c05","a62f03","400d01"],
     JAMAICA: ["bb382c","dcba1d","256e35","242424"],
+    BLACK_ORANGE: ["000000","1d495c","2a97b8","ff8800","f9f7f8"],
 });
