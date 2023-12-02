@@ -23,6 +23,8 @@ var sliderYBias = document.getElementById("yBias");
 var outputYBias = document.getElementById("outputYBias");
 outputYBias.innerHTML = sliderYBias.value;
 
+var selectColorPalette = document.getElementById("colorPalette");
+
 
 CanvasRenderingContext2D.prototype.circle = function (x, y, radius) {
     this.beginPath();
@@ -39,7 +41,7 @@ var maxUrge = 10;
 var xBias = -1.0;
 var yBias = -1.0;
 
-const colorPalette = Palettes.DEFAULT;
+var colorPalette = Palettes.DEFAULT;
 
 function draw() {
     canvas.width = (window.innerWidth > 0) ? window.innerWidth : screen.width;
@@ -136,6 +138,26 @@ function rerollColors() {
     for (var dot of dots) {
         dot.color = getRandomColorFromPalette(colorPalette);
     }
+}
+
+
+
+window.onload = function () {loadColorPalettes()};
+
+function loadColorPalettes() {
+    for (const key of Object.keys(Palettes)) {
+        var option = document.createElement("option");
+        option.value = key;
+        option.text = key;
+        selectColorPalette.appendChild(option);
+    }
+}
+
+selectColorPalette.oninput = function () {
+    const value = this.value;
+    colorPalette = Palettes[value];
+    rerollColors();
+    draw();
 }
 
 //sliders functions
