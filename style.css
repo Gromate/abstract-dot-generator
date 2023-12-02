@@ -32,7 +32,6 @@ canvas {
 }
 
 button {
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
     border: 0px var(--main-color);
     border-radius: 10px;
     background-color: var(--secondary-color);
@@ -41,4 +40,11 @@ button {
 
 button:hover {
     background-color: var(--main-color-darker);
+}
+
+select {
+    border: 0px var(--main-color);
+    border-radius: 10px;
+    background-color: var(--secondary-color);
+    padding: 8px;
 }
