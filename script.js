@@ -1,6 +1,7 @@
 import { Dot } from "./dot.js";
 import * as fonkyMath from "./fonkyMath.js";
 import { Palettes } from "./colorPalettes.js";
+import { getRandomColorFromPalette } from "./colorPalettes.js";
 
 var sliderDotCount = document.getElementById("dotCount");
 var outputDotCount = document.getElementById("outputDotCount");
@@ -22,22 +23,11 @@ var sliderYBias = document.getElementById("yBias");
 var outputYBias = document.getElementById("outputYBias");
 outputYBias.innerHTML = sliderYBias.value;
 
-function getRandomColor() {
-    return `rgb(
-        ${fonkyMath.getRandomArbitraryMax(255)},
-        ${fonkyMath.getRandomArbitraryMax(255)},
-        ${fonkyMath.getRandomArbitraryMax(255)}
-    )`
-}
 
 CanvasRenderingContext2D.prototype.circle = function (x, y, radius) {
     this.beginPath();
     this.arc(x, y, radius, 0, Math.PI * 2, true);
     this.fill();
-}
-
-function getRandomColorPalette(colorPalette) {
-    return `#${colorPalette[Math.floor(Math.random() * colorPalette.length)]}`;
 }
 
 var dotScale = 50;
@@ -56,6 +46,7 @@ function draw() {
     canvas.width -= 16;
     canvas.height = (window.innerHeight > 0) ? window.innerHeight : screen.height;
     canvas.height *= 0.9;
+
     if (canvas.getContext) {
         const ctx = canvas.getContext("2d");
         dotCount = sliderDotCount.value;
@@ -70,19 +61,17 @@ function draw() {
         ctx.fillRect(0, 0, ctx.canvas.width, ctx.canvas.height);
 
         while (dots.length < dotCount) {
-            const coordinates = daAlgo();
+            const coordinates = getNextCoordinates();
             dots.push(new Dot(
                 coordinates[0],
                 coordinates[1],
                 Math.random(), //radius
-                getRandomColorPalette(colorPalette) //color
+                getRandomColorFromPalette(colorPalette) //color
             ));
-            console.log("creating");
         }
 
         while (dots.length > dotCount) {
             dots.pop();
-            console.log("deleting");
         }
 
         for (var dot of dots) {
@@ -95,14 +84,18 @@ function draw() {
 }
 draw();
 
-function daAlgo() {
+/*
+function chooses next coordinates with homemade function based on 
+randomly choosing step size and direction
+then rolling for urge to go again
+it stops rolling when urge < maxUrge
+*/
+function getNextCoordinates() {
     var x, y;
     var urgeToDraw = 0;
     const StepSize = 10;
 
     if (!Array.isArray(dots) || !dots.length) {
-        //x = canvas.width/2;
-        //y = canvas.height/2;
         x = fonkyMath.getRandomIntMax(canvas.width);
         y = fonkyMath.getRandomIntMax(canvas.height);
     } else {
@@ -116,6 +109,7 @@ function daAlgo() {
         urgeToDraw += fonkyMath.getRandomIntMax(StepSize);
     }   
 
+    //clamping coordinates to canvas so if they go out of bounds they come up on the other side (snake like)
     if (x > canvas.width) {
         x -= canvas.width;
     }
@@ -140,7 +134,7 @@ function reroll() {
 
 function rerollColors() {
     for (var dot of dots) {
-        dot.color = getRandomColorPalette(colorPalette);
+        dot.color = getRandomColorFromPalette(colorPalette);
     }
 }
 

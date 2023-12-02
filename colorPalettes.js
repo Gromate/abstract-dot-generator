@@ -8,3 +8,15 @@ export const Palettes = Object.freeze({
     JAMAICA: ["bb382c","dcba1d","256e35","242424"],
     BLACK_ORANGE: ["000000","1d495c","2a97b8","ff8800","f9f7f8"],
 });
+
+export function getRandomColorFromPalette(colorPalette) {
+    return `#${colorPalette[Math.floor(Math.random() * colorPalette.length)]}`;
+}
+
+export function getRandomColor() {
+    return `rgb(
+        ${fonkyMath.getRandomArbitraryMax(255)},
+        ${fonkyMath.getRandomArbitraryMax(255)},
+        ${fonkyMath.getRandomArbitraryMax(255)}
+    )`
+}
